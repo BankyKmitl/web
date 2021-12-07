@@ -1,6 +1,7 @@
 # pylint: disable=missing-docstring
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
 
 from odoo import _, api, exceptions, fields, models
 
@@ -12,6 +13,7 @@ WARNING = "warning"
 INFO = "info"
 DEFAULT = "default"
 
+_logger = logging.getLogger(__name__)
 
 class ResUsers(models.Model):
     _inherit = "res.users"
@@ -69,5 +71,6 @@ class ResUsers(models.Model):
             "title": title,
             "sticky": sticky,
         }
-        notifications = [(record[channel_name_field], bus_message) for record in self]
-        self.env["bus.bus"].sendmany(notifications)
+        notifications = [(record[channel_name_field], type_message, bus_message) for record in self]
+        _logger.warning(notifications)
+        self.env["bus.bus"]._sendmany(notifications)

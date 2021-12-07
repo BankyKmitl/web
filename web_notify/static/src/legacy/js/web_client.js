@@ -1,7 +1,7 @@
 odoo.define("web_notify.WebClient", function (require) {
     "use strict";
 
-    var WebClient = require("web.WebClient");
+    var WebClient = require("web.WebClint");
     var session = require("web.session");
     require("bus.BusService");
 
@@ -12,6 +12,7 @@ odoo.define("web_notify.WebClient", function (require) {
             return res;
         },
         start_polling: function () {
+            console.log('start_polling');
             this.channel_success = "notify_success_" + session.uid;
             this.channel_danger = "notify_danger_" + session.uid;
             this.channel_warning = "notify_warning_" + session.uid;
